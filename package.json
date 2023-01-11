@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/tostesdaniel/desafio-sharenergy-2023-01/issues"
   },
-  "homepage": "https://github.com/tostesdaniel/desafio-sharenergy-2023-01#readme"
+  "homepage": "https://github.com/tostesdaniel/desafio-sharenergy-2023-01#readme",
+  "private": "true",
+  "workspaces": [
+    "app/*"
+  ]
 }
