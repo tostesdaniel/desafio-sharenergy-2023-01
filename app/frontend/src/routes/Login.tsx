@@ -1,7 +1,33 @@
-import logo from '../logo.png';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import loginCover from '../assets/images/login-cover.jpg';
+import logo from '../logo.png';
+import { requestLogin } from '../services/requests';
+
+const initialLoginState = { username: '', password: '' };
 
 export default function Login() {
+  const [login, setLogin] = useState(initialLoginState);
+  const navigate = useNavigate();
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    setLogin((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    requestLogin(login)
+      .then((response) => {
+        saveToken(response.data);
+        navigate('/users');
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const saveToken = (token: string) => localStorage.setItem('token', token);
+
   return (
     <div className="flex min-h-full">
       <div className="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
@@ -31,6 +57,8 @@ export default function Login() {
                       autoComplete="username"
                       required
                       className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-yellow-500 sm:text-sm"
+                      onChange={handleChange}
+                      value={login.username}
                     />
                   </div>
                 </div>
@@ -50,6 +78,8 @@ export default function Login() {
                       autoComplete="current-password"
                       required
                       className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-yellow-500 sm:text-sm"
+                      onChange={handleChange}
+                      value={login.password}
                     />
                   </div>
                 </div>
@@ -75,6 +105,7 @@ export default function Login() {
                   <button
                     type="submit"
                     className="flex w-full justify-center rounded-md border border-transparent bg-yellow-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+                    onClick={handleSubmit}
                   >
                     Entrar
                   </button>
