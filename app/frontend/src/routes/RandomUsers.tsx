@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Pagination from '../components/Pagination';
 import RandomUser from '../components/RandomUser';
 import {
@@ -9,14 +9,37 @@ import {
 import { requestRandomUsers } from '../services/requests';
 
 export default function RandomUsers() {
-  const [users, setUsers] = useState<IRandomUser[]>([]);
+  const [usersToRender, setUsersToRender] = useState<IRandomUser[]>([]);
+  const [allUsers, setAllUsers] = useState<IRandomUser[]>([]);
+  const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
+  const filterUsers = useCallback(
+    (user: IRandomUser) => {
+      const userFullName = `${user.name.first} ${user.name.last}`;
+      return (
+        userFullName.toLowerCase().includes(search.toLowerCase()) ||
+        user.email.toLowerCase().includes(search.toLowerCase()) ||
+        user.login.username.toLowerCase().includes(search.toLowerCase())
+      );
+    },
+    [search]
+  );
+
   useEffect(() => {
-    requestRandomUsers().then(({ data }: AxiosResponse<RandomUserResponse>) =>
-      setUsers(data.results)
-    );
+    requestRandomUsers().then(({ data }: AxiosResponse<RandomUserResponse>) => {
+      setAllUsers(data.results);
+      setUsersToRender(data.results);
+    });
   }, []);
+
+  useEffect(() => {
+    setUsersToRender(allUsers.filter((user) => filterUsers(user)));
+  }, [allUsers, filterUsers]);
+
+  useEffect(() => {
+    if (search === '') setUsersToRender(allUsers);
+  }, [allUsers, search]);
 
   return (
     <>
@@ -24,6 +47,15 @@ export default function RandomUsers() {
         <div className="py-6">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h1 className="text-2xl font-semibold text-gray-900">Usuários</h1>
+            <div className="mt-4">
+              <input
+                type="text"
+                name="search"
+                id="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
           </div>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
             <div className="mt-8 flex flex-col">
@@ -60,11 +92,13 @@ export default function RandomUsers() {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200 bg-white">
-                        {users.map((user) => (
-                          <tr key={user.email}>
-                            <RandomUser user={user} />
-                          </tr>
-                        ))}
+                        {usersToRender
+                          .slice((currentPage - 1) * 10, currentPage * 10)
+                          .map((user) => (
+                            <tr key={user.email}>
+                              <RandomUser user={user} />
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>
