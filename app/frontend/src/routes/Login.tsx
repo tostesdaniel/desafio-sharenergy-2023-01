@@ -4,7 +4,10 @@ import loginCover from '../assets/images/login-cover.jpg';
 import logo from '../logo.png';
 import { requestLogin } from '../services/requests';
 
-const initialLoginState = { username: '', password: '' };
+const initialLoginState = {
+  username: 'desafiosharenergy',
+  password: 'sh@r3n3rgy',
+};
 
 export default function Login() {
   const [login, setLogin] = useState(initialLoginState);
@@ -21,7 +24,7 @@ export default function Login() {
     requestLogin(login)
       .then((response) => {
         saveToken(response.data);
-        navigate('/users');
+        navigate('users/random');
       })
       .catch((error) => console.log(error));
   };
