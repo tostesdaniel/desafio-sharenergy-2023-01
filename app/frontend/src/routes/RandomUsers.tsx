@@ -1,8 +1,10 @@
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { useCallback, useEffect, useState } from 'react';
+import Alert from '../components/Alert';
 import Pagination from '../components/Pagination';
 import RandomUser from '../components/RandomUser';
 import {
+  ApiError,
   RandomUser as IRandomUser,
   RandomUserResponse,
 } from '../services/interfaces/randomUser.interface';
@@ -11,11 +13,18 @@ import { requestRandomUsers } from '../services/requests';
 const MAX_RESULTS_PER_PAGE = 10;
 const RESULTS_PER_PAGE = 10;
 
+export interface Error {
+  statusText: string | undefined;
+  errorMessage: string | undefined;
+}
+
 export default function RandomUsers() {
   const [usersToRender, setUsersToRender] = useState<IRandomUser[]>([]);
   const [allUsers, setAllUsers] = useState<IRandomUser[]>([]);
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [error, setError] = useState(false);
+  const [errorData, setErrorData] = useState<Error | null>(null);
 
   const filterUsers = useCallback(
     (user: IRandomUser) => {
@@ -30,10 +39,18 @@ export default function RandomUsers() {
   );
 
   useEffect(() => {
-    requestRandomUsers().then(({ data }: AxiosResponse<RandomUserResponse>) => {
-      setAllUsers(data.results);
-      setUsersToRender(data.results);
-    });
+    requestRandomUsers()
+      .then(({ data }: AxiosResponse<RandomUserResponse>) => {
+        setAllUsers(data.results);
+        setUsersToRender(data.results);
+      })
+      .catch(({ response }: AxiosError<ApiError>) => {
+        setError(true);
+        setErrorData({
+          statusText: response?.statusText,
+          errorMessage: response?.data.error,
+        });
+      });
   }, []);
 
   useEffect(() => {
@@ -50,14 +67,23 @@ export default function RandomUsers() {
         <div className="py-6">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h1 className="text-2xl font-semibold text-gray-900">Usuários</h1>
-            <div className="mt-4">
-              <input
-                type="text"
-                name="search"
-                id="search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
+            <div className="flex items-center justify-between">
+              <div className="mt-4">
+                <input
+                  type="text"
+                  name="search"
+                  id="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
+              {error && (
+                <div className="relative -mt-24 w-full">
+                  <div className="absolute right-0 z-10 ">
+                    <Alert error={errorData} />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
