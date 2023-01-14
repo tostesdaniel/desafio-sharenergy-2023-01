@@ -8,6 +8,9 @@ import {
 } from '../services/interfaces/randomUser.interface';
 import { requestRandomUsers } from '../services/requests';
 
+const MAX_RESULTS_PER_PAGE = 10;
+const RESULTS_PER_PAGE = 10;
+
 export default function RandomUsers() {
   const [usersToRender, setUsersToRender] = useState<IRandomUser[]>([]);
   const [allUsers, setAllUsers] = useState<IRandomUser[]>([]);
@@ -93,7 +96,10 @@ export default function RandomUsers() {
                       </thead>
                       <tbody className="divide-y divide-gray-200 bg-white">
                         {usersToRender
-                          .slice((currentPage - 1) * 10, currentPage * 10)
+                          .slice(
+                            (currentPage - 1) * RESULTS_PER_PAGE,
+                            currentPage * MAX_RESULTS_PER_PAGE
+                          )
                           .map((user) => (
                             <tr key={user.email}>
                               <RandomUser user={user} />
