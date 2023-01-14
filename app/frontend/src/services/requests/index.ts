@@ -7,7 +7,5 @@ const randomUserUrl = 'https://randomuser.me/api/';
 export const requestLogin = (data: Login) =>
   axios.post(`${baseUrl}auth/login`, data);
 
-export const requestRandomUsers = (page: number = 1) =>
-  axios.get(
-    `${randomUserUrl}?page=${page}&results=10&nat=br&seed=desafiosharenergy`
-  );
+export const requestRandomUsers = () =>
+  axios.get(`${randomUserUrl}?results=5000&nat=br&seed=desafiosharenergy`);
