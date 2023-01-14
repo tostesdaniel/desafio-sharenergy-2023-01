@@ -6,10 +6,12 @@ import './index.css';
 import NotFound from './NotFound';
 import reportWebVitals from './reportWebVitals';
 import Login from './routes/Login';
+import RandomUsers from './routes/RandomUsers';
 
 const router = createBrowserRouter([
   { path: '/', element: <App />, errorElement: <NotFound /> },
   { path: '/login', element: <Login /> },
+  { path: '/users/random', element: <RandomUsers /> },
 ]);
 
 const root = ReactDOM.createRoot(
