@@ -1,6 +1,11 @@
 import { ExclamationTriangleIcon } from '@heroicons/react/20/solid';
+import { Error } from '../routes/RandomUsers';
 
-export default function Alert() {
+interface Props {
+  error: Error | null;
+}
+
+export default function Alert({ error }: Props) {
   return (
     <div className="rounded-md bg-red-50 p-4">
       <div className="flex">
@@ -11,10 +16,15 @@ export default function Alert() {
           />
         </div>
         <div className="ml-3">
-          <h3 className="text-sm font-medium text-red-800">Erro</h3>
+          <h3 className="text-sm font-medium text-red-800">
+            {(error?.statusText === 'Too Many Requests' && 'Muitos pedidos') ||
+              'Encontramos um problema'}
+          </h3>
           <div className="mt-2 text-sm text-red-700">
             <p>
-              Ocorreu um erro. Aguarde alguns minutos e recarregue a página.
+              {error
+                ? 'Você buscou muitos usuários no último minuto. Aguarde alguns minutos e recarregue a página.'
+                : 'Ocorreu algo inesperado. Tente recarregar a página.'}
             </p>
           </div>
         </div>
