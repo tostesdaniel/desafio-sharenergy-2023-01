@@ -1,5 +1,3 @@
-import { AxiosError } from 'axios';
-
 export interface RandomUserResponse {
   results: RandomUser[];
   info: Info;
