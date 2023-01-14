@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import App from './App';
 import './index.css';
+import MainLayout from './layouts/MainLayout';
 import NotFound from './NotFound';
 import reportWebVitals from './reportWebVitals';
 import Login from './routes/Login';
 import RandomUsers from './routes/RandomUsers';
 
 const router = createBrowserRouter([
-  { path: '/', element: <App />, errorElement: <NotFound /> },
+  {
+    path: '/',
+    element: <MainLayout />,
+    errorElement: <NotFound />,
+    children: [{ path: 'users/random', element: <RandomUsers /> }],
+  },
   { path: '/login', element: <Login /> },
-  { path: '/users/random', element: <RandomUsers /> },
 ]);
 
 const root = ReactDOM.createRoot(
