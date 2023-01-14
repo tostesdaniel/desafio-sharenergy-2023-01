@@ -8,4 +8,4 @@ export const requestLogin = (data: Login) =>
   axios.post(`${baseUrl}auth/login`, data);
 
 export const requestRandomUsers = () =>
-  axios.get(`${randomUserUrl}?results=5000&nat=br&seed=desafiosharenergy`);
+  axios.get(`${randomUserUrl}?results=1500&nat=br&seed=desafiosharenergy`);
