@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios';
+
 export interface RandomUserResponse {
   results: RandomUser[];
   info: Info;
@@ -85,4 +87,8 @@ export interface Info {
   results: number;
   page: number;
   version: string;
+}
+
+export interface ApiError {
+  error: string;
 }
