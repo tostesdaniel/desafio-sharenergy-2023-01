@@ -14,7 +14,7 @@ export const navigation = [
 ];
 
 export default function MainLayout() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div>
