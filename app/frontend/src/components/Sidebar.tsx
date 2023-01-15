@@ -4,7 +4,7 @@ import Logo from '../logo.png';
 
 export default function Sidebar() {
   return (
-    <div className="hidden md:flex">
+    <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64">
       <div>
         <div>
           <img className="h-8 w-auto" src={Logo} alt="Logo" />
