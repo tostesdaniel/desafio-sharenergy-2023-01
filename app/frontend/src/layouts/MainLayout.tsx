@@ -3,6 +3,7 @@ import {
   QuestionMarkCircleIcon,
 } from '@heroicons/react/20/solid';
 import { useState } from 'react';
+import { Location, useLocation } from 'react-router-dom';
 import MobileSidebar from '../components/MobileSidebar';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
@@ -13,8 +14,13 @@ export const navigation = [
   { name: 'Gatos HTTP', href: 'http-cat', icon: QuestionMarkCircleIcon },
 ];
 
+function getTitle(location: Location): string | undefined {
+  return navigation.find((item) => item.href === location.pathname)?.name;
+}
+
 export default function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <div>
@@ -25,7 +31,7 @@ export default function MainLayout() {
       <Sidebar />
       <div className="flex flex-1 flex-col md:pl-64">
         <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <Content />
+        <Content title={getTitle(location)} />
       </div>
     </div>
   );
