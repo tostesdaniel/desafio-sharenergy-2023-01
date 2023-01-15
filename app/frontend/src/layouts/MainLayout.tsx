@@ -5,6 +5,7 @@ import {
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import MobileSidebar from '../components/MobileSidebar';
+import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 
 export const navigation = [
@@ -17,12 +18,13 @@ export default function MainLayout() {
 
   return (
     <div>
-      MainLayout <Outlet />
       <MobileSidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
       />
       <Sidebar />
+      <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <Outlet />
     </div>
   );
 }
