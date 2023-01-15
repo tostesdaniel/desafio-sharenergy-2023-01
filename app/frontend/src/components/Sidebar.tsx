@@ -5,7 +5,7 @@ import classNames from '../services/helpers/joinClassnames';
 
 export default function Sidebar() {
   return (
-    <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64">
+    <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
       <div>
         <div>
           <img className="h-8 w-auto" src={Logo} alt="Logo" />
