@@ -11,7 +11,7 @@ export default function Sidebar() {
           <img className="h-8 w-auto" src={Logo} alt="Logo" />
         </div>
 
-        <div>
+        <div className="flex flex-1 flex-col overflow-y-auto">
           <nav className="flex-1 space-y-1 py-4 px-2">
             {navigation.map((item) => (
               <NavLink
