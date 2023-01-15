@@ -24,7 +24,7 @@ export default function Login() {
     requestLogin(login)
       .then((response) => {
         saveToken(response.data);
-        navigate('users/random');
+        navigate('/users/random');
       })
       .catch((error) => console.log(error));
   };
