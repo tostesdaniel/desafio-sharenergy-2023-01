@@ -5,6 +5,7 @@ import {
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import MobileSidebar from '../components/MobileSidebar';
+import Sidebar from '../components/Sidebar';
 
 export const navigation = [
   { name: 'Usuários aleatórios', href: 'users/random', icon: ArrowPathIcon },
@@ -21,6 +22,7 @@ export default function MainLayout() {
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
       />
+      <Sidebar />
     </div>
   );
 }
