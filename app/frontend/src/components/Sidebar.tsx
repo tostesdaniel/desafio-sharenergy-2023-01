@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { navigation } from '../layouts/MainLayout';
 import Logo from '../logo.png';
+import classNames from '../services/helpers/joinClassnames';
 
 export default function Sidebar() {
   return (
@@ -13,9 +14,32 @@ export default function Sidebar() {
         <div>
           <nav>
             {navigation.map((item) => (
-              <NavLink key={item.name} to={item.href}>
-                <item.icon className="h-6 w-6" aria-hidden="true" />
-                {item.name}
+              <NavLink
+                key={item.name}
+                to={item.href}
+                className={({ isActive }) =>
+                  classNames(
+                    isActive
+                      ? 'bg-gray-900 text-white'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                    'group flex items-center rounded-md p-2 text-sm font-medium'
+                  )
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <item.icon
+                      className={classNames(
+                        isActive
+                          ? 'text-gray-300'
+                          : 'text-gray-400 group-hover:text-gray-300',
+                        'mr-3 h-6 w-6 shrink-0'
+                      )}
+                      aria-hidden="true"
+                    />
+                    {item.name}
+                  </>
+                )}
               </NavLink>
             ))}
           </nav>
