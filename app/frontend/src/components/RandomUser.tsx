@@ -22,17 +22,17 @@ export default function RandomUser({ user }: Props) {
             <div className="font-medium text-gray-900">
               {`${name.first} ${name.last}`}
             </div>
-            <div className="text-gray-500 lg:hidden">{email}</div>
-            <div className="text-gray-500 sm:hidden md:table-cell xl:hidden">
+            <div className="text-gray-500 xl:hidden">{email}</div>
+            <div className="text-gray-500 sm:hidden md:table-cell lg:hidden">
               {login.username}
             </div>
           </div>
         </div>
       </td>
-      <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell">
+      <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 xl:table-cell">
         {email}
       </td>
-      <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell md:hidden xl:table-cell">
+      <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell md:hidden lg:table-cell">
         {login.username}
       </td>
       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
