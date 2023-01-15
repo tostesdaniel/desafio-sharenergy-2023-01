@@ -12,7 +12,7 @@ export default function Sidebar() {
         </div>
 
         <div>
-          <nav>
+          <nav className="flex-1 space-y-1 py-4 px-2">
             {navigation.map((item) => (
               <NavLink
                 key={item.name}
