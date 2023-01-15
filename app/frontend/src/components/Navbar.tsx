@@ -8,7 +8,7 @@ interface Props {
 
 export default function Navbar({ sidebarOpen, setSidebarOpen }: Props) {
   return (
-    <div className="sticky top-0 z-10 h-16 bg-white shadow">
+    <div className="sticky top-0 z-10 h-16 bg-gray-100 shadow">
       <button
         type="button"
         className="text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
