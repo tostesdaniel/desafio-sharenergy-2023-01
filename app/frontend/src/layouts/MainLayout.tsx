@@ -3,10 +3,10 @@ import {
   QuestionMarkCircleIcon,
 } from '@heroicons/react/20/solid';
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
 import MobileSidebar from '../components/MobileSidebar';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
+import Content from './Content';
 
 export const navigation = [
   { name: 'Usuários aleatórios', href: 'users/random', icon: ArrowPathIcon },
@@ -23,8 +23,10 @@ export default function MainLayout() {
         setSidebarOpen={setSidebarOpen}
       />
       <Sidebar />
-      <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <Outlet />
+      <div className="md:pl-64">
+        <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <Content />
+      </div>
     </div>
   );
 }
