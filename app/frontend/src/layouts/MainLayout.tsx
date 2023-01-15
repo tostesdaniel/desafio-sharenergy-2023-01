@@ -15,7 +15,7 @@ export const navigation = [
 ];
 
 function getTitle(location: Location): string | undefined {
-  return navigation.find((item) => item.href === location.pathname)?.name;
+  return navigation.find((item) => location.pathname.includes(item.href))?.name;
 }
 
 export default function MainLayout() {
