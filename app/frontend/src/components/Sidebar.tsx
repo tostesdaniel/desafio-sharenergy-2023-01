@@ -7,7 +7,7 @@ export default function Sidebar() {
   return (
     <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
       <div>
-        <div>
+        <div className="flex h-16 shrink-0 items-center px-4">
           <img className="h-8 w-auto" src={Logo} alt="Logo" />
         </div>
 
