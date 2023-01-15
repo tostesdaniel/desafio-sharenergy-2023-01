@@ -8,7 +8,7 @@ interface Props {
 
 export default function Navbar({ sidebarOpen, setSidebarOpen }: Props) {
   return (
-    <div>
+    <div className="md:pl-64">
       <div className="sticky top-0 z-10 h-16 bg-white shadow">
         <button type="button" onClick={() => setSidebarOpen(true)}>
           <span className="sr-only">Abrir menu</span>
