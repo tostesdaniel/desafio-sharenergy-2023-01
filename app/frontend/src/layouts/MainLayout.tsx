@@ -23,7 +23,7 @@ export default function MainLayout() {
         setSidebarOpen={setSidebarOpen}
       />
       <Sidebar />
-      <div className="md:pl-64">
+      <div className="flex flex-1 flex-col md:pl-64">
         <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <Content />
       </div>
