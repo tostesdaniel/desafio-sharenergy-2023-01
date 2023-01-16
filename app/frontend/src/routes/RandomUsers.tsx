@@ -3,6 +3,9 @@ import { useCallback, useEffect, useState } from 'react';
 import Alert from '../components/Alert';
 import Pagination from '../components/Pagination';
 import RandomUser from '../components/RandomUser';
+import Searchbar from '../components/Searchbar';
+import Title from '../components/Title';
+import Container from '../layouts/Container';
 import {
   ApiError,
   RandomUser as IRandomUser,
@@ -63,16 +66,15 @@ export default function RandomUsers() {
 
   return (
     <>
-      <div className="flex items-center justify-between">
-        <div className="mt-4">
-          <input
-            type="text"
-            name="search"
-            id="search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+      <Container>
+        <div className="sm:flex sm:items-center md:block lg:flex">
+          <Title title="Usuários aleatórios" />
+          <div className="mt-4 max-w-sm sm:mt-0 sm:ml-16 sm:flex-none md:ml-0 md:mt-4 lg:mt-0">
+            <Searchbar search={search} setSearch={setSearch} />
+          </div>
         </div>
+      </Container>
+      <div className="flex items-center justify-between">
         {error && (
           <div className="relative -mt-24 w-full">
             <div className="absolute right-0 z-10 ">
