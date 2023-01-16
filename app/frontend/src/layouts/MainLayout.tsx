@@ -31,7 +31,7 @@ export default function MainLayout() {
       <Sidebar />
       <div className="flex flex-1 flex-col md:pl-64">
         <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <Content title={getTitle(location)} />
+        <Content />
       </div>
     </div>
   );
