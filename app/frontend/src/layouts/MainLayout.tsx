@@ -1,5 +1,6 @@
 import {
   ArrowPathIcon,
+  FaceSmileIcon,
   QuestionMarkCircleIcon,
 } from '@heroicons/react/20/solid';
 import { useState } from 'react';
@@ -11,6 +12,7 @@ import Content from './Content';
 export const navigation = [
   { name: 'Usuários aleatórios', href: 'users/random', icon: ArrowPathIcon },
   { name: 'Gatos HTTP', href: 'http-cat', icon: QuestionMarkCircleIcon },
+  { name: 'Gerador de cães', href: 'dogs', icon: FaceSmileIcon },
 ];
 
 export default function MainLayout() {
