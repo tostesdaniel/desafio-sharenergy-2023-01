@@ -6,6 +6,8 @@ interface CatContextProps {
   setImage: Dispatch<SetStateAction<string>>;
   selectedStatusCode: StatusCode;
   setSelectedStatusCode: Dispatch<SetStateAction<StatusCode>>;
+  showIntroduction: boolean;
+  setShowIntroduction: Dispatch<SetStateAction<boolean>>;
 }
 
 export const CatContext = createContext<CatContextProps>({} as CatContextProps);
