@@ -1,28 +1,42 @@
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { CatContext } from '../../context/CatContext';
+import classNames from '../../services/helpers/joinClassnames';
 
 interface Props {
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function CatSection({ setModalOpen }: Props) {
-  const { image } = useContext(CatContext);
+  const { image, showIntroduction } = useContext(CatContext);
 
   return (
-    <div className="-mx-8 bg-white">
+    <div className="-mx-8 h-full bg-white sm:-mx-6 lg:-mx-8">
       <div className="relative bg-gray-900">
         <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
           <img
             src={image}
             alt="Cat"
-            className="h-full w-full object-cover object-center"
+            className={classNames(
+              'h-full w-full',
+              showIntroduction
+                ? 'object-cover object-center'
+                : 'object-cover object-center sm:object-contain'
+            )}
           />
         </div>
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gray-900 opacity-50"
+          className={classNames(
+            'absolute inset-0 bg-gray-900',
+            showIntroduction ? 'opacity-50' : 'opacity-0'
+          )}
         />
-        <div className="relative mx-auto flex flex-col items-center py-32 px-6 text-center sm:py-64 lg:px-0">
+        <div
+          className={classNames(
+            'relative mx-auto flex flex-col items-center py-32 px-6 text-center sm:py-64 lg:py-56 lg:px-0 xl:py-64',
+            !showIntroduction && 'invisible'
+          )}
+        >
           <h1 className="text-4xl font-bold tracking-tight text-white lg:text-6xl">
             Gere um gato para um código de status HTTP
           </h1>
