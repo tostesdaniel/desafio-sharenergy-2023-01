@@ -13,7 +13,13 @@ export default function StatusCodeCombobox() {
     query === ''
       ? httpStatusCodes
       : httpStatusCodes.filter((statusCode) => {
-          return statusCode.status.toLowerCase().includes(query.toLowerCase());
+          return (
+            statusCode.status.includes(query) ||
+            statusCode.message
+              .toLowerCase()
+              .replace(' ', '')
+              .includes(query.toLowerCase())
+          );
         });
 
   return (
