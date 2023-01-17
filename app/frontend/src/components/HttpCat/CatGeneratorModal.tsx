@@ -9,7 +9,8 @@ interface Props {
 }
 
 export default function Modal({ modalOpen, setModalOpen }: Props) {
-  const { selectedStatusCode, setImage } = useContext(CatContext);
+  const { selectedStatusCode, setImage, setShowIntroduction } =
+    useContext(CatContext);
 
   return (
     <Transition show={modalOpen} as={Fragment}>
@@ -64,6 +65,7 @@ export default function Modal({ modalOpen, setModalOpen }: Props) {
                           `https://http.cat/${selectedStatusCode.status}`
                         );
                         setModalOpen(false);
+                        setShowIntroduction(false);
                       }}
                     >
                       Gerar
