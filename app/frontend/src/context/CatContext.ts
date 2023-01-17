@@ -1,7 +1,7 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 import { StatusCode } from '../services/constants';
 
-interface CatContextProps {
+interface CatContextType {
   image: string;
   setImage: Dispatch<SetStateAction<string>>;
   selectedStatusCode: StatusCode;
@@ -10,4 +10,4 @@ interface CatContextProps {
   setShowIntroduction: Dispatch<SetStateAction<boolean>>;
 }
 
-export const CatContext = createContext<CatContextProps>({} as CatContextProps);
+export const CatContext = createContext<CatContextType>({} as CatContextType);
