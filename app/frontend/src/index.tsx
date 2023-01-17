@@ -5,6 +5,7 @@ import './index.css';
 import MainLayout from './layouts/MainLayout';
 import NotFound from './NotFound';
 import reportWebVitals from './reportWebVitals';
+import Dogs from './routes/Dogs';
 import HttpCat from './routes/HttpCat';
 import Login from './routes/Login';
 import RandomUsers from './routes/RandomUsers';
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
     children: [
       { path: 'users/random', element: <RandomUsers /> },
       { path: 'http-cat', element: <HttpCat /> },
+      { path: 'dogs', element: <Dogs /> },
     ],
   },
   { path: '/login', element: <Login /> },
