@@ -1,15 +1,15 @@
+import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useCallback, useEffect, useState } from 'react';
-import Alert from '../components/Alert';
+import Notification from '../components/Notification';
 import Pagination from '../components/Pagination';
 import RandomUser from '../components/RandomUser';
 import Searchbar from '../components/Searchbar';
 import Title from '../components/Title';
-import Container from '../layouts/Container';
 import {
   ApiError,
   RandomUser as IRandomUser,
-  RandomUserResponse,
+  RandomUserResponse
 } from '../services/interfaces/randomUser.interface';
 import { requestRandomUsers } from '../services/requests';
 
@@ -66,22 +66,11 @@ export default function RandomUsers() {
 
   return (
     <>
-      <Container>
-        <div className="sm:flex sm:items-center md:block lg:flex">
-          <Title title="Usuários aleatórios" />
-          <div className="mt-4 max-w-sm sm:mt-0 sm:ml-16 sm:flex-none md:ml-0 md:mt-4 lg:mt-0">
-            <Searchbar search={search} setSearch={setSearch} />
-          </div>
+      <div className="sm:flex sm:items-center md:block lg:flex">
+        <Title title="Usuários aleatórios" />
+        <div className="mt-4 max-w-sm sm:mt-0 sm:ml-16 sm:flex-none md:ml-0 md:mt-4 lg:mt-0">
+          <Searchbar search={search} setSearch={setSearch} />
         </div>
-      </Container>
-      <div className="flex items-center justify-between">
-        {error && (
-          <div className="relative -mt-24 w-full">
-            <div className="absolute right-0 z-10 ">
-              <Alert error={errorData} />
-            </div>
-          </div>
-        )}
       </div>
       <div className="mt-8 flex flex-col">
         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -134,6 +123,17 @@ export default function RandomUsers() {
         </div>
         <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
       </div>
+      {error && (
+        <Notification
+          error={{
+            title: errorData?.statusText,
+            description: errorData?.errorMessage,
+          }}
+          icon={{ icon: ExclamationCircleIcon, color: 'text-red-500' }}
+          show={error}
+          setShow={setError}
+        />
+      )}
     </>
   );
 }
