@@ -9,6 +9,7 @@ import Dogs from './routes/Dogs';
 import HttpCat from './routes/HttpCat';
 import Login from './routes/Login';
 import RandomUsers from './routes/RandomUsers';
+import Users from './routes/Users';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { path: 'users/random', element: <RandomUsers /> },
       { path: 'http-cat', element: <HttpCat /> },
       { path: 'dogs', element: <Dogs /> },
+      { path: 'users', element: <Users /> },
     ],
   },
   { path: '/login', element: <Login /> },
