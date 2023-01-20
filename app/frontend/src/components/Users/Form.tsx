@@ -4,20 +4,34 @@ import React, {
   Dispatch,
   FormEvent,
   SetStateAction,
+  useEffect,
+  useRef,
   useState
 } from 'react';
 import { z } from 'zod';
 import { validationErrorData } from '../../services/constants';
 import { IUser } from '../../services/interfaces/user.interface';
-import { createUser } from '../../services/requests';
+import { createUser, editUser } from '../../services/requests';
 import Notification, { Error } from '../Notification';
+import { CleanUser, Mode } from './UserModal';
 
 interface Props {
   cancelButtonRef: React.MutableRefObject<null>;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  mode?: Mode;
+  user?: CleanUser;
 }
 
-const initialState: IUser = {
+interface InitialState {
+  username: string;
+  email: string;
+  address: string;
+  cpf: string;
+  phone: string;
+  password?: string;
+}
+
+const initialState: InitialState = {
   username: '',
   email: '',
   address: '',
@@ -35,22 +49,37 @@ const userSchema = z.object({
   password: z.string().min(3).max(255),
 });
 
-export default function Form({ cancelButtonRef, setOpen }: Props) {
+export default function Form({ cancelButtonRef, setOpen, mode, user }: Props) {
   const [form, setForm] = useState(initialState);
   const [validationError, setValidationError] = useState(false);
   const [errorData, setErrorData] = useState<Error>();
 
+  const formRef = useRef(form);
+
+  useEffect(() => {
+    if (mode === 'edit' && user) {
+      if (user !== formRef.current) {
+        setForm(user);
+        formRef.current = user;
+      }
+    }
+  }, [mode, user]);
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-
     setForm({ ...form, [name]: value });
   };
 
   const submitForm = async (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     try {
-      userSchema.parse(form);
-      await createUser(form);
+      if (mode === 'edit' && user) {
+        userSchema.omit({ password: true }).parse(form);
+        await editUser(user._id, form as CleanUser);
+      } else {
+        userSchema.parse(form);
+        await createUser(form as IUser);
+      }
       setOpen(false);
     } catch (error) {
       setErrorData(validationErrorData);
@@ -91,25 +120,28 @@ export default function Form({ cancelButtonRef, setOpen }: Props) {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Senha
-                </label>
-                <div className="mt-1">
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    autoComplete="password"
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  />
+              {mode === 'create' && (
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Senha
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="password"
+                      name="password"
+                      type="password"
+                      value={form.password}
+                      onChange={handleChange}
+                      autoComplete="password"
+                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
+
               <div className="sm:col-span-4">
                 <label
                   htmlFor="email"
@@ -204,7 +236,7 @@ export default function Form({ cancelButtonRef, setOpen }: Props) {
               className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               onClick={submitForm}
             >
-              Cadastrar
+              {mode === 'edit' ? 'Atualizar' : 'Cadastrar'}
             </button>
           </div>
         </div>
