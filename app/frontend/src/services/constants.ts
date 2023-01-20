@@ -1,3 +1,5 @@
+import { Error } from '../components/Notification';
+
 export interface StatusCode {
   status: string;
   message: string;
@@ -75,3 +77,8 @@ export const httpStatusCodes: StatusCode[] = [
   { status: '525', message: 'SSL Handshake Failed' },
   { status: '599', message: 'Network Connect Timeout Error' },
 ];
+
+export const validationErrorData: Error = {
+  title: 'Há um erro nos campos',
+  description: 'Verifique se todos os campos foram preenchidos corretamente',
+};
