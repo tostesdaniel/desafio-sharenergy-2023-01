@@ -1,13 +1,16 @@
 import { cpf as cpfLib } from 'cpf-cnpj-validator';
 import { parsePhoneNumber } from 'libphonenumber-js';
-import { IUser } from '../../services/interfaces/user.interface';
+import { useState } from 'react';
+import { IEditUser } from '../../services/interfaces/user.interface';
+import CreateUserModal from './UserModal';
 
 interface Props {
-  user: IUser;
+  user: IEditUser;
 }
 
 export default function User({ user }: Props) {
-  const { address, cpf, email, phone, username } = user;
+  const { _id, address, cpf, email, phone, username } = user;
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <>
@@ -33,10 +36,25 @@ export default function User({ user }: Props) {
         {parsePhoneNumber(phone, 'BR').formatNational()}
       </td>
       <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-        <button type="button" className="text-indigo-600 hover:text-indigo-900">
+        <button
+          id={_id}
+          type="button"
+          className="text-indigo-600 hover:text-indigo-900"
+          onClick={() => setModalOpen(true)}
+        >
           Edit<span className="sr-only">, {username}</span>
         </button>
       </td>
+      {modalOpen && (
+        <td>
+          <CreateUserModal
+            mode="edit"
+            open={modalOpen}
+            setOpen={setModalOpen}
+            user={user}
+          />
+        </td>
+      )}
     </>
   );
 }
