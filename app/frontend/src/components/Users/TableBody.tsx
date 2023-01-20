@@ -1,9 +1,9 @@
-import { IUser } from '../../services/interfaces/user.interface';
+import { IEditUser } from '../../services/interfaces/user.interface';
 import User from './User';
 
 interface Props {
   currentPage: number;
-  usersToRender: IUser[];
+  usersToRender: IEditUser[];
 }
 
 const MAX_RESULTS_PER_PAGE = 10;
