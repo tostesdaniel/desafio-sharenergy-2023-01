@@ -29,7 +29,7 @@ export class UsersService {
   }
 
   async update(
-    id: number,
+    id: string,
     updateUserDto: UpdateUserDto,
   ): Promise<UserDocument> {
     return this.userModel.findByIdAndUpdate(id, updateUserDto);
