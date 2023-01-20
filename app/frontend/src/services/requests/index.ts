@@ -12,3 +12,5 @@ export const requestRandomUsers = () =>
   axios.get(`${randomUserUrl}?results=1500&nat=br&seed=desafiosharenergy`);
 
 export const requestDog = () => axios.get(dogUrl);
+
+export const requestUsers = () => axios.get(`${baseUrl}users`);
