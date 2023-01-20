@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Login from '../interfaces/login.interface';
+import { IUser } from '../interfaces/user.interface';
 
 const baseUrl = 'http://localhost:3001/';
 const randomUserUrl = 'https://randomuser.me/api/';
@@ -14,3 +15,5 @@ export const requestRandomUsers = () =>
 export const requestDog = () => axios.get(dogUrl);
 
 export const requestUsers = () => axios.get(`${baseUrl}users`);
+
+export const createUser = (data: IUser) => axios.post(`${baseUrl}users`, data);
