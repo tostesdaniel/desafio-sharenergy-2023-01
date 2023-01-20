@@ -6,18 +6,18 @@ import Title from '../components/Title';
 import CreateUser from '../components/Users/CreateUser';
 import TableBody from '../components/Users/TableBody';
 import TableHead from '../components/Users/TableHead';
-import { IUser } from '../services/interfaces/user.interface';
+import { IEditUser } from '../services/interfaces/user.interface';
 import { requestUsers } from '../services/requests';
 
 export default function Users() {
-  const [allUsers, setAllUsers] = useState<IUser[]>([]);
-  const [usersToRender, setUsersToRender] = useState<IUser[]>([]);
+  const [allUsers, setAllUsers] = useState<IEditUser[]>([]);
+  const [usersToRender, setUsersToRender] = useState<IEditUser[]>([]);
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     requestUsers()
-      .then(({ data }: AxiosResponse<IUser[]>) => {
+      .then(({ data }: AxiosResponse<IEditUser[]>) => {
         setAllUsers(data);
         setUsersToRender(data);
       })
