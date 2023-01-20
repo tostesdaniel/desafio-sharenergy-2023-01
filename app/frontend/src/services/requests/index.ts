@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { CleanUser } from '../../components/Users/UserModal';
 import Login from '../interfaces/login.interface';
 import { IUser } from '../interfaces/user.interface';
 
@@ -16,4 +17,9 @@ export const requestDog = () => axios.get(dogUrl);
 
 export const requestUsers = () => axios.get(`${baseUrl}users`);
 
+export const requestUser = (id: string) => axios.get(`${baseUrl}users/${id}`);
+
 export const createUser = (data: IUser) => axios.post(`${baseUrl}users`, data);
+
+export const editUser = (id: string, data: CleanUser) =>
+  axios.patch(`${baseUrl}users/${id}`, data);
