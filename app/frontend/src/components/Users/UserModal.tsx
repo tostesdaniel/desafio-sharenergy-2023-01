@@ -1,14 +1,45 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Dispatch, Fragment, SetStateAction, useRef } from 'react';
+import { AxiosResponse } from 'axios';
+import {
+  Dispatch,
+  Fragment,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
+import { IEditUser } from '../../services/interfaces/user.interface';
+import { requestUser } from '../../services/requests';
 import Form from './Form';
 
+export type Mode = 'create' | 'edit';
+export type CleanUser = Omit<IEditUser, 'password'>;
+
 interface Props {
+  mode?: Mode;
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  user?: IEditUser;
 }
 
-export default function UserModal({ open, setOpen }: Props) {
+export default function UserModal({
+  mode = 'create',
+  open,
+  setOpen,
+  user,
+}: Props) {
+  const [userData, setUserData] = useState<CleanUser>();
+
   const cancelButtonRef = useRef(null);
+
+  useEffect(() => {
+    if (mode === 'edit' && user) {
+      requestUser(user._id).then(({ data }: AxiosResponse<IEditUser>) => {
+        const { password, ...cleanUser } = data;
+        setUserData(cleanUser);
+      });
+    }
+  }, [mode, user]);
 
   return (
     <Transition show={open} as={Fragment}>
@@ -42,7 +73,16 @@ export default function UserModal({ open, setOpen }: Props) {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative w-full transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:max-w-screen-sm sm:p-6">
-                <Form setOpen={setOpen} cancelButtonRef={cancelButtonRef} />
+                {mode === 'edit' ? (
+                  <Form
+                    setOpen={setOpen}
+                    cancelButtonRef={cancelButtonRef}
+                    mode="edit"
+                    user={userData}
+                  />
+                ) : (
+                  <Form setOpen={setOpen} cancelButtonRef={cancelButtonRef} />
+                )}
               </Dialog.Panel>
             </Transition.Child>
           </div>
