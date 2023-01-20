@@ -7,7 +7,7 @@ interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function CreateUserModal({ open, setOpen }: Props) {
+export default function UserModal({ open, setOpen }: Props) {
   const cancelButtonRef = useRef(null);
 
   return (
