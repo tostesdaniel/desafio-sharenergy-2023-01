@@ -3,11 +3,13 @@ import { XMarkIcon } from '@heroicons/react/20/solid';
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import { Dispatch, Fragment, SetStateAction } from 'react';
 
+export interface Error {
+  title: string | undefined;
+  description: string | undefined;
+}
+
 interface Props {
-  error: {
-    title: string | undefined;
-    description: string | undefined;
-  };
+  error: Error;
   icon: { icon: typeof ExclamationCircleIcon; color: string };
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
