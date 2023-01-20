@@ -1,11 +1,27 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 interface Props {
   cancelButtonRef: React.MutableRefObject<null>;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
+const initialState = {
+  username: '',
+  email: '',
+  address: '',
+  cpf: '',
+  phone: '',
+};
+
 export default function Form({ cancelButtonRef, setOpen }: Props) {
+  const [form, setForm] = useState(initialState);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    setForm({ ...form, [name]: value });
+  };
+
   return (
     <form className="space-y-8 divide-y divide-gray-200">
       <div className="space-y-8 divide-y divide-gray-200">
@@ -31,6 +47,8 @@ export default function Form({ cancelButtonRef, setOpen }: Props) {
                   type="text"
                   name="username"
                   id="username"
+                  value={form.username}
+                  onChange={handleChange}
                   autoComplete="username"
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
@@ -49,6 +67,8 @@ export default function Form({ cancelButtonRef, setOpen }: Props) {
                   id="email"
                   name="email"
                   type="email"
+                  value={form.email}
+                  onChange={handleChange}
                   autoComplete="email"
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
@@ -57,7 +77,7 @@ export default function Form({ cancelButtonRef, setOpen }: Props) {
 
             <div className="sm:col-span-6">
               <label
-                htmlFor="street-address"
+                htmlFor="address"
                 className="block text-sm font-medium text-gray-700"
               >
                 Endereço
@@ -65,8 +85,10 @@ export default function Form({ cancelButtonRef, setOpen }: Props) {
               <div className="mt-1">
                 <input
                   type="text"
-                  name="street-address"
-                  id="street-address"
+                  name="address"
+                  id="address"
+                  value={form.address}
+                  onChange={handleChange}
                   autoComplete="street-address"
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
@@ -85,6 +107,8 @@ export default function Form({ cancelButtonRef, setOpen }: Props) {
                   type="text"
                   name="cpf"
                   id="cpf"
+                  value={form.cpf}
+                  onChange={handleChange}
                   autoComplete="on"
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
@@ -93,7 +117,7 @@ export default function Form({ cancelButtonRef, setOpen }: Props) {
 
             <div className="sm:col-span-2">
               <label
-                htmlFor="tel"
+                htmlFor="phone"
                 className="block text-sm font-medium text-gray-700"
               >
                 Telefone
@@ -101,8 +125,10 @@ export default function Form({ cancelButtonRef, setOpen }: Props) {
               <div className="mt-1">
                 <input
                   type="tel"
-                  name="tel"
-                  id="tel"
+                  name="phone"
+                  id="phone"
+                  value={form.phone}
+                  onChange={handleChange}
                   autoComplete="tel-national"
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
