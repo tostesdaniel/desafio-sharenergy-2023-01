@@ -20,7 +20,7 @@ export class UsersService {
     return this.userModel.find();
   }
 
-  async findOne(id: number): Promise<UserDocument> {
+  async findOne(id: string): Promise<UserDocument> {
     return this.userModel.findById(id);
   }
 
