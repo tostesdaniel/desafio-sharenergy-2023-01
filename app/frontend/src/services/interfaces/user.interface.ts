@@ -6,3 +6,7 @@ export interface IUser {
   cpf: string;
   password: string;
 }
+
+export interface IEditUser extends IUser {
+  _id: string;
+}
