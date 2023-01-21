@@ -23,3 +23,5 @@ export const createUser = (data: IUser) => axios.post(`${baseUrl}users`, data);
 
 export const editUser = (id: string, data: CleanUser) =>
   axios.patch(`${baseUrl}users/${id}`, data);
+
+export const deleteUser = (id: string) => axios.delete(`${baseUrl}users/${id}`);
