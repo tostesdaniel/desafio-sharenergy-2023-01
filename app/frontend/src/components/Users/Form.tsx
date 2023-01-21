@@ -98,7 +98,6 @@ export default function Form({
   };
 
   const requestUserDeletion = async () => {
-    console.log(user?._id);
     user && (await deleteUser(user._id).then(() => setOpen(false)));
   };
 
