@@ -4,11 +4,13 @@ import React, {
   Dispatch,
   FormEvent,
   SetStateAction,
+  useContext,
   useEffect,
   useRef,
   useState
 } from 'react';
 import { z } from 'zod';
+import { UsersContext } from '../../context/UserContext';
 import { validationErrorData } from '../../services/constants';
 import { IUser } from '../../services/interfaces/user.interface';
 import { createUser, deleteUser, editUser } from '../../services/requests';
@@ -49,10 +51,17 @@ const userSchema = z.object({
   password: z.string().min(3).max(255),
 });
 
-export default function Form({ cancelButtonRef, setOpen, mode, user }: Props) {
+export default function Form({
+  cancelButtonRef,
+  setOpen,
+  mode = 'create',
+  user,
+}: Props) {
   const [form, setForm] = useState(initialState);
   const [validationError, setValidationError] = useState(false);
   const [errorData, setErrorData] = useState<Error>();
+
+  const { setRefreshUsers } = useContext(UsersContext);
 
   const formRef = useRef(form);
 
@@ -80,6 +89,7 @@ export default function Form({ cancelButtonRef, setOpen, mode, user }: Props) {
         userSchema.parse(form);
         await createUser(form as IUser);
       }
+      setRefreshUsers(true);
       setOpen(false);
     } catch (error) {
       setErrorData(validationErrorData);
