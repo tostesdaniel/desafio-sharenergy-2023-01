@@ -12,10 +12,17 @@ import React, {
 import { z } from 'zod';
 import { UsersContext } from '../../context/UserContext';
 import { validationErrorData } from '../../services/constants';
+import classNames from '../../services/helpers/joinClassnames';
 import { IUser } from '../../services/interfaces/user.interface';
 import { createUser, deleteUser, editUser } from '../../services/requests';
 import Notification, { Error } from '../Notification';
 import { CleanUser, Mode } from './UserModal';
+
+const titles: Record<Mode, string> = {
+  create: 'Cadastro de usuários',
+  edit: 'Atualizar usuário',
+  view: 'Informações do usuário',
+};
 
 interface Props {
   cancelButtonRef: React.MutableRefObject<null>;
@@ -114,9 +121,14 @@ export default function Form({
           <div>
             <div>
               <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Cadastro de usuários
+                {titles[mode]}
               </h3>
-              <p className="mt-1 text-sm text-gray-500">
+              <p
+                className={classNames(
+                  'mt-1 text-sm text-gray-500',
+                  mode === 'view' && 'hidden'
+                )}
+              >
                 Preencha todos os campos.
               </p>
             </div>
