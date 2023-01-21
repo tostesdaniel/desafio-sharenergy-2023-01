@@ -266,7 +266,7 @@ export default function Form({
               onClick={() => setOpen(false)}
               ref={cancelButtonRef}
             >
-              Cancelar
+              {mode === 'view' ? 'Fechar' : 'Cancelar'}
             </button>
             {mode !== 'view' && (
               <>
