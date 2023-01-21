@@ -98,7 +98,11 @@ export default function Form({
   };
 
   const requestUserDeletion = async () => {
-    user && (await deleteUser(user._id).then(() => setOpen(false)));
+    user &&
+      (await deleteUser(user._id).then(() => {
+        setRefreshUsers(true);
+        setOpen(false);
+      }));
   };
 
   return (
