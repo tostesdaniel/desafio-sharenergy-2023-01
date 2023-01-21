@@ -2,7 +2,7 @@ import { cpf as cpfLib } from 'cpf-cnpj-validator';
 import { parsePhoneNumber } from 'libphonenumber-js';
 import { useState } from 'react';
 import { IEditUser } from '../../services/interfaces/user.interface';
-import CreateUserModal from './UserModal';
+import CreateUserModal, { Mode } from './UserModal';
 
 interface Props {
   user: IEditUser;
@@ -11,6 +11,7 @@ interface Props {
 export default function User({ user }: Props) {
   const { _id, address, cpf, email, phone, username } = user;
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<Mode>('edit');
 
   return (
     <>
@@ -40,7 +41,23 @@ export default function User({ user }: Props) {
           id={_id}
           type="button"
           className="text-indigo-600 hover:text-indigo-900"
-          onClick={() => setModalOpen(true)}
+          onClick={() => {
+            setModalMode('view');
+            setModalOpen(true);
+          }}
+        >
+          Ver<span className="sr-only">, {username}</span>
+        </button>
+      </td>
+      <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+        <button
+          id={_id}
+          type="button"
+          className="text-indigo-600 hover:text-indigo-900"
+          onClick={() => {
+            setModalMode('edit');
+            setModalOpen(true);
+          }}
         >
           Editar<span className="sr-only">, {username}</span>
         </button>
@@ -48,7 +65,7 @@ export default function User({ user }: Props) {
       {modalOpen && (
         <td>
           <CreateUserModal
-            mode="edit"
+            mode={modalMode}
             open={modalOpen}
             setOpen={setModalOpen}
             user={user}
