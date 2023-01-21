@@ -35,7 +35,7 @@ export class UsersService {
     return this.userModel.findByIdAndUpdate(id, updateUserDto);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return this.userModel.findByIdAndRemove(id);
   }
 }
