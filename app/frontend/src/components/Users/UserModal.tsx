@@ -12,7 +12,7 @@ import { IEditUser } from '../../services/interfaces/user.interface';
 import { requestUser } from '../../services/requests';
 import Form from './Form';
 
-export type Mode = 'create' | 'edit';
+export type Mode = 'create' | 'edit' | 'view';
 export type CleanUser = Omit<IEditUser, 'password'>;
 
 interface Props {
@@ -33,7 +33,8 @@ export default function UserModal({
   const cancelButtonRef = useRef(null);
 
   useEffect(() => {
-    if (mode === 'edit' && user) {
+    const editOrViewMode = mode === 'edit' || mode === 'view';
+    if (editOrViewMode && user) {
       requestUser(user._id).then(({ data }: AxiosResponse<IEditUser>) => {
         const { password, ...cleanUser } = data;
         setUserData(cleanUser);
@@ -73,15 +74,15 @@ export default function UserModal({
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative w-full transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:max-w-screen-sm sm:p-6">
-                {mode === 'edit' ? (
+                {mode === 'create' ? (
+                  <Form setOpen={setOpen} cancelButtonRef={cancelButtonRef} />
+                ) : (
                   <Form
                     setOpen={setOpen}
                     cancelButtonRef={cancelButtonRef}
-                    mode="edit"
+                    mode={mode}
                     user={userData}
                   />
-                ) : (
-                  <Form setOpen={setOpen} cancelButtonRef={cancelButtonRef} />
                 )}
               </Dialog.Panel>
             </Transition.Child>
