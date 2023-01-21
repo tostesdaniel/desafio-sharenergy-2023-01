@@ -42,7 +42,7 @@ export default function User({ user }: Props) {
           className="text-indigo-600 hover:text-indigo-900"
           onClick={() => setModalOpen(true)}
         >
-          Edit<span className="sr-only">, {username}</span>
+          Editar<span className="sr-only">, {username}</span>
         </button>
       </td>
       {modalOpen && (
