@@ -268,20 +268,24 @@ export default function Form({
             >
               Cancelar
             </button>
-            <button
-              type="button"
-              className="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-              onClick={requestUserDeletion}
-            >
-              Excluir
-            </button>
-            <button
-              type="submit"
-              className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              onClick={submitForm}
-            >
-              {mode === 'edit' ? 'Atualizar' : 'Cadastrar'}
-            </button>
+            {mode !== 'view' && (
+              <>
+                <button
+                  type="button"
+                  className="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                  onClick={requestUserDeletion}
+                >
+                  Excluir
+                </button>
+                <button
+                  type="submit"
+                  className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  onClick={submitForm}
+                >
+                  {mode === 'edit' ? 'Atualizar' : 'Cadastrar'}
+                </button>
+              </>
+            )}
           </div>
         </div>
       </form>
