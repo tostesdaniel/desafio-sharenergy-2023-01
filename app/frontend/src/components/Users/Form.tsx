@@ -63,10 +63,12 @@ export default function Form({
 
   const { setRefreshUsers } = useContext(UsersContext);
 
+  const viewMode = mode === 'view';
   const formRef = useRef(form);
 
   useEffect(() => {
-    if (mode === 'edit' && user) {
+    const editOrViewMode = mode === 'edit' || mode === 'view';
+    if (editOrViewMode && user) {
       if (user !== formRef.current) {
         setForm(user);
         formRef.current = user;
@@ -133,6 +135,7 @@ export default function Form({
                     id="username"
                     value={form.username}
                     onChange={handleChange}
+                    disabled={viewMode}
                     autoComplete="username"
                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
@@ -174,6 +177,7 @@ export default function Form({
                     type="email"
                     value={form.email}
                     onChange={handleChange}
+                    disabled={viewMode}
                     autoComplete="email"
                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
@@ -193,6 +197,7 @@ export default function Form({
                     id="address"
                     value={form.address}
                     onChange={handleChange}
+                    disabled={viewMode}
                     autoComplete="street-address"
                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
@@ -212,6 +217,7 @@ export default function Form({
                     id="cpf"
                     value={form.cpf}
                     onChange={handleChange}
+                    disabled={viewMode}
                     autoComplete="on"
                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
@@ -231,6 +237,7 @@ export default function Form({
                     id="phone"
                     value={form.phone}
                     onChange={handleChange}
+                    disabled={viewMode}
                     autoComplete="tel-national"
                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
